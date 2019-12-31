@@ -8,16 +8,16 @@ import requests
 import getpass
 from requests.utils import requote_uri
 
-from argh import *
+#from argh import *
 
 from .utils import Query
 from .display import Display
 
 
-try:
-    input = raw_input
-except NameError:
-    pass
+# try:
+#     input = raw_input()
+# except NameError:
+#     pass
 
 
 class VastAPI(object):
@@ -91,7 +91,8 @@ class VastAPI(object):
         offers = r.json()["offers"]
 
         if raw:
-            Display.raw(offers)
+            #Display.raw(offers)
+            return offers
         else:
             Display.table(offers, max_rows, Display.search_settings)
 

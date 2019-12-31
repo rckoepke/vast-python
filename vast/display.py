@@ -1,6 +1,6 @@
 import json
 
-import pandas as pd
+#import pandas as pd
 
 identity = lambda x: x
 
@@ -22,6 +22,7 @@ class Display:
         ("inet_down", "Net down", "{:0.1f}", identity, True),
         ("reliability2", "R", "{:0.1f}", lambda x: x * 100, True),
         ("duration", "Max Days", "{:0.1f}", lambda x: x / (24.0 * 60.0 * 60.0), True),
+        ("min_bid", "Min Bid", "{:0.3f}", identity, False),
     )
 
     fields = (
@@ -51,21 +52,21 @@ class Display:
     def raw(data):
         print(json.dumps(data, indent=2, sort_keys=True))
 
-    @staticmethod
-    def table(data, max_rows, settings=None):
-        df = pd.DataFrame(data)
-        if settings:
-            # Subset
-            df = df[[col[0] for col in settings]]
-            # Rename
-            df = df.rename(columns={col[0]: col[1] for col in settings})
-            # Transform
-            for col in settings:
-                df.loc[:, col[1]] = df[col[1]].map(col[3]).map(col[2].format, na_action='ignore')
-
-        df = df.fillna('-')
-
-        if max_rows:
-            df = df.head(max_rows)
-
-        print(df.to_string(index=False))
+    # @staticmethod
+    # def table(data, max_rows, settings=None):
+    #     df = pd.DataFrame(data)
+    #     if settings:
+    #         # Subset
+    #         df = df[[col[0] for col in settings]]
+    #         # Rename
+    #         df = df.rename(columns={col[0]: col[1] for col in settings})
+    #         # Transform
+    #         for col in settings:
+    #             df.loc[:, col[1]] = df[col[1]].map(col[3]).map(col[2].format, na_action='ignore')
+    #
+    #     df = df.fillna('-')
+    #
+    #     if max_rows:
+    #         df = df.head(max_rows)
+    #
+    #     print(df.to_string(index=False))
